@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (C) 2018 Raffaele Conforti (www.raffaeleconforti.com)
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU Lesser General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU Lesser General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU Lesser General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.raffaeleconforti</groupId>
+    <artifactId>process-discoverer</artifactId>
+    <version>1.0.20181204</version>
+    <packaging>bundle</packaging>
+    <name>Process Discoverer</name>
+
+    <properties>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>${java.source.version}</java.target.version>
+        <maven.compiler.plugin>3.0</maven.compiler.plugin>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin}</version>
+                    <configuration>
+                        <source>${java.source.version}</source>
+                        <target>${java.target.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Bundle>
+                            org.apromore.raffaeleconforti-osgi;bundle-version="[1.0,2.0]",
+                            org.apromore.log-osgi;bundle-version="[1.0,2.0]",
+                            org.apromore.eclipse-collections-osgi;bundle-version="[1.0,2.0]",
+                            org.apromore.bpmndiagramimporter-logic;bundle-version="[1.0,2.0]",
+                            org.apache.commons.lang3;bundle-version="[3.0,4.0]",
+                            org.apache.commons.lang;bundle-version="[2.0,3.0]"
+                        </Import-Bundle>
+                        <Import-Package>
+                            org.springframework.beans.factory.aspectj,
+                            org.processmining.contexts.*;version="[1.0,2.0)",
+                            org.processmining.framework.*;version="[1.0,2.0)",
+                            org.processmining.models.*;version="[1.0,2.0)",
+                            org.processmining.plugins.*;version="[1.0,2.0)",
+                            org.deckfour.xes.model.*;version="[1.0,2.0)",
+                            org.deckfour.xes.factory.*;version="[1.0,2.0)",
+                            !com.raffaeleconforti.processdiscoverer.*,
+                            !com.raffaeleconforti.statistics.*,
+                            !au.com.bytecode.opencsv.*,
+                            !org.apache.commons.lang3.*,
+                            <!--!org.eclipse.collections.*,-->
+                            *
+                        </Import-Package>
+                        <Export-Package>
+                            com.raffaeleconforti.processdiscoverer
+                        </Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <artifactSet>
+                        <includes>
+                            <include>com.raffaeleconforti:bpmn-util</include>
+                            <include>com.raffaeleconforti:foreignkey-discovery</include>
+                            <include>com.raffaeleconforti:statistics</include>
+                            <include>org.ow2.bundles:ow2-bundles-externals-opencsv</include>
+                        </includes>
+                    </artifactSet>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.factories</resource>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.handlers</resource>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.schemas</resource>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.provides</resource>
+                        </transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>bpmn-util</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>foreignkey-discovery</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore</groupId>
+            <artifactId>raffaeleconforti-osgi</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+            <version>9.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.processmining</groupId>
+            <artifactId>pnetreplayer</artifactId>
+            <version>6.5.20170701</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>bpmn-util</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>foreignkey-discovery</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>statistics</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raffaeleconforti</groupId>
+            <artifactId>process-discoverer-logic</artifactId>
+            <version>1.0.20180719</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apromore</groupId>
+            <artifactId>apromore-manager</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore</groupId>
+            <artifactId>apromore-portal</artifactId>
+            <version>1.1</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore</groupId>
+            <artifactId>bpmndiagramimporter-logic</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore</groupId>
+            <artifactId>eclipse-collections-osgi</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore.plugin</groupId>
+            <artifactId>log-animation-portal-plugin</artifactId>
+            <version>1.0</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apromore.plugin</groupId>
+            <artifactId>portal-plugin-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.bundles</groupId>
+            <artifactId>ow2-bundles-externals-opencsv</artifactId>
+            <version>1.0.36</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+            <version>9.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
+            <version>9.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.processmining</groupId>
+            <artifactId>bpmn</artifactId>
+            <version>6.5.20180622</version>
+        </dependency>
+    </dependencies>
+</project>
+
