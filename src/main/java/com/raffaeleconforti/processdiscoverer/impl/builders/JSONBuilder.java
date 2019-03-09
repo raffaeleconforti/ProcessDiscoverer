@@ -54,8 +54,8 @@ import com.raffaeleconforti.processdiscoverer.impl.VisualizationAggregation;
 import com.raffaeleconforti.processdiscoverer.impl.VisualizationType;
 import com.raffaeleconforti.processdiscoverer.impl.ColorGradient;
 import com.raffaeleconforti.processdiscoverer.impl.collectors.NodeInfoCollector;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
-import com.raffaeleconforti.processdiscoverer.impl.util.TimeConverter;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
+import com.raffaeleconforti.processdiscoverer.impl.util.Convertor;
 import org.eclipse.collections.impl.map.mutable.primitive.ObjectIntHashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,7 +79,7 @@ import java.util.*;
  */
 public class JSONBuilder {
 
-    private final DecimalFormat decimalFormat = new DecimalFormat(new String(StringValues.a[123], StandardCharsets.UTF_8));
+    private final DecimalFormat decimalFormat = new DecimalFormat(new String(Container.var1[123], StandardCharsets.UTF_8));
 
     private final double change_color_limit = 0.7;
     private final String start_name = "|>";
@@ -270,12 +270,12 @@ public class JSONBuilder {
                     if (node_name.contains("\\n")) {
                         node_name = node_name.substring(0, node_name.indexOf("\\n"));
                         String value = node.getLabel().substring(node.getLabel().indexOf("[") + 1, node.getLabel().length() - 1);
-                        jsonOneNode.put("name", node_name.replaceAll("'", "") + "\\n\\n" + TimeConverter.convertMilliseconds(value));
+                        jsonOneNode.put("name", node_name.replaceAll("'", "") + "\\n\\n" + Convertor.convertFrom(value));
                     }else {
                         jsonOneNode.put("name", node_name.replaceAll("'", ""));
                     }
-                }else if(type == VisualizationType.DURATION) jsonOneNode.put("name", node.getLabel().replaceAll("'", "") + "\\n\\n" + TimeConverter.convertMilliseconds("" + nodeInfoCollector.getNodeDuration(node.getLabel(), primaryAggregation)) + ((secondary) ? "\\n\\n" + decimalFormat.format(nodeInfoCollector.getNodeFrequency(false, node.getLabel(), secondaryAggregation)) : ""));
-                else jsonOneNode.put("name", node.getLabel().replaceAll("'", "") + "\\n\\n" + decimalFormat.format(nodeInfoCollector.getNodeFrequency(false, node.getLabel(), primaryAggregation)) + ((secondary) ? "\\n\\n" + TimeConverter.convertMilliseconds("" + nodeInfoCollector.getNodeDuration(node.getLabel(), secondaryAggregation)) : ""));
+                }else if(type == VisualizationType.DURATION) jsonOneNode.put("name", node.getLabel().replaceAll("'", "") + "\\n\\n" + Convertor.convertFrom("" + nodeInfoCollector.getNodeDuration(node.getLabel(), primaryAggregation)) + ((secondary) ? "\\n\\n" + decimalFormat.format(nodeInfoCollector.getNodeFrequency(false, node.getLabel(), secondaryAggregation)) : ""));
+                else jsonOneNode.put("name", node.getLabel().replaceAll("'", "") + "\\n\\n" + decimalFormat.format(nodeInfoCollector.getNodeFrequency(false, node.getLabel(), primaryAggregation)) + ((secondary) ? "\\n\\n" + Convertor.convertFrom("" + nodeInfoCollector.getNodeDuration(node.getLabel(), secondaryAggregation)) : ""));
 
                 jsonOneNode.put("shape", "roundrectangle");
 
@@ -348,10 +348,10 @@ public class JSONBuilder {
                 } else {
                     jsonOneLink.put("strength", bd.doubleValue());
                     if (type == VisualizationType.DURATION) {
-                        jsonOneLink.put("label", TimeConverter.convertMilliseconds(mainNumber) + ((secondary) ? "\\n\\n" + decimalFormat.format(Double.parseDouble(secondaryNumber)) : ""));
+                        jsonOneLink.put("label", Convertor.convertFrom(mainNumber) + ((secondary) ? "\\n\\n" + decimalFormat.format(Double.parseDouble(secondaryNumber)) : ""));
                         jsonOneLink.put("color", "#" + Integer.toHexString(arc_duration_gradient.generateColor(bd.doubleValue() / 100).getRGB()).substring(2));
                     }else {
-                        jsonOneLink.put("label", decimalFormat.format(Double.parseDouble(mainNumber)) + ((secondary) ? "\\n\\n" + TimeConverter.convertMilliseconds(secondaryNumber) : ""));
+                        jsonOneLink.put("label", decimalFormat.format(Double.parseDouble(mainNumber)) + ((secondary) ? "\\n\\n" + Convertor.convertFrom(secondaryNumber) : ""));
                         jsonOneLink.put("color", "#" + Integer.toHexString(arc_frequency_gradient.generateColor(bd.doubleValue() / 100).getRGB()).substring(2));
                     }
                 }

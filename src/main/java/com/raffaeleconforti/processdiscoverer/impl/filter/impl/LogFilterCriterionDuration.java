@@ -54,8 +54,8 @@ import com.raffaeleconforti.processdiscoverer.impl.filter.Action;
 import com.raffaeleconforti.processdiscoverer.impl.filter.Containment;
 import com.raffaeleconforti.processdiscoverer.impl.filter.Level;
 import com.raffaeleconforti.processdiscoverer.impl.filter.LogFilterCriterionImpl;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
-import com.raffaeleconforti.processdiscoverer.impl.util.TimeConverter;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
+import com.raffaeleconforti.processdiscoverer.impl.util.Convertor;
 import org.deckfour.xes.model.XAttributeTimestamp;
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XTrace;
@@ -83,7 +83,7 @@ public class LogFilterCriterionDuration extends LogFilterCriterionImpl {
 
             for(String v : value) {
 
-                String[] h = TimeConverter.parseDuration(Double.parseDouble(v.substring(1)));
+                String[] h = Convertor.convertFrom(Double.parseDouble(v.substring(1)));
 
                 double seconds = 1000.0;
                 double minutes = seconds * 60.0;

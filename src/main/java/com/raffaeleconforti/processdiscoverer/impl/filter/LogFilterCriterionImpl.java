@@ -51,7 +51,7 @@
 package com.raffaeleconforti.processdiscoverer.impl.filter;
 
 import com.raffaeleconforti.processdiscoverer.LogFilterCriterion;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XTrace;
@@ -64,7 +64,7 @@ import java.util.Set;
  */
 public abstract class LogFilterCriterionImpl implements LogFilterCriterion {
 
-    protected final String timestamp_code = new String(StringValues.a[122], StandardCharsets.UTF_8);
+    protected final String timestamp_code = new String(Container.var1[122], StandardCharsets.UTF_8);
 
     protected final String label;
     protected final String attribute;

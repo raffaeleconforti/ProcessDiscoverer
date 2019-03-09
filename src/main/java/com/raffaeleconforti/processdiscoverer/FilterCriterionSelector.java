@@ -51,7 +51,7 @@
 package com.raffaeleconforti.processdiscoverer;
 
 import com.raffaeleconforti.processdiscoverer.impl.filter.LogFilterTypeSelector;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
 import org.apromore.plugin.portal.PortalContext;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -72,7 +72,7 @@ import java.util.Map;
  */
 class FilterCriterionSelector {
 
-    private final DecimalFormat decimalFormat = new DecimalFormat(new String(StringValues.a[123], StandardCharsets.UTF_8));
+    private final DecimalFormat decimalFormat = new DecimalFormat(new String(Container.var1[123], StandardCharsets.UTF_8));
 
     PortalContext portalContext;
     private ProcessDiscovererController processDiscovererController;

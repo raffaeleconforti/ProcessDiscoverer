@@ -53,8 +53,8 @@ package com.raffaeleconforti.processdiscoverer;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
-import com.raffaeleconforti.processdiscoverer.impl.util.TimeConverter;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
+import com.raffaeleconforti.processdiscoverer.impl.util.Convertor;
 import com.raffaeleconforti.service.ProcessDiscovererService;
 import com.raffaeleconforti.context.FakePluginContext;
 import com.raffaeleconforti.conversion.bpmn.BPMNToPetriNetConverter;
@@ -215,7 +215,7 @@ public class ProcessDiscovererController {
     private long min = Long.MAX_VALUE;
     private long max = 0;
 
-    private String label = new String(StringValues.a[161], StandardCharsets.UTF_8);
+    private String label = new String(Container.var1[161], StandardCharsets.UTF_8);
 
     private DomainService domainService;
     private ProcessService processService;
@@ -240,7 +240,7 @@ public class ProcessDiscovererController {
 
         Map<SummaryType, List<VersionSummaryType>> elements = context.getSelection().getSelectedProcessModelVersions();
         if (elements.size() != 1) {
-            Messagebox.show(new String(StringValues.a[9], StandardCharsets.UTF_8), new String(StringValues.a[10], StandardCharsets.UTF_8), Messagebox.OK, Messagebox.INFORMATION);
+            Messagebox.show(new String(Container.var1[9], StandardCharsets.UTF_8), new String(Container.var1[10], StandardCharsets.UTF_8), Messagebox.OK, Messagebox.INFORMATION);
             return;
         }
         SummaryType summary = elements.keySet().iterator().next();
@@ -253,16 +253,16 @@ public class ProcessDiscovererController {
             Version version = new Version(vst.getVersionNumber());
 
             String model = processService.getBPMNRepresentation(procName, procID, branch, version);
-            String startevent = model.substring(model.indexOf(new String(StringValues.a[11], StandardCharsets.UTF_8)));
-            startevent = startevent.substring(0, startevent.indexOf(new String(StringValues.a[13], StandardCharsets.UTF_8)) + 2);
-            if (startevent.contains(new String(StringValues.a[14], StandardCharsets.UTF_8))) {
-                String newStartEvent = startevent.replace(new String(StringValues.a[14], StandardCharsets.UTF_8), "");
+            String startevent = model.substring(model.indexOf(new String(Container.var1[11], StandardCharsets.UTF_8)));
+            startevent = startevent.substring(0, startevent.indexOf(new String(Container.var1[13], StandardCharsets.UTF_8)) + 2);
+            if (startevent.contains(new String(Container.var1[14], StandardCharsets.UTF_8))) {
+                String newStartEvent = startevent.replace(new String(Container.var1[14], StandardCharsets.UTF_8), "");
                 model = model.replace(startevent, newStartEvent);
             }
-            String endevent = model.substring(model.indexOf(new String(StringValues.a[12], StandardCharsets.UTF_8)));
-            endevent = endevent.substring(0, endevent.indexOf(new String(StringValues.a[13], StandardCharsets.UTF_8)) + 2);
-            if (endevent.contains(new String(StringValues.a[14], StandardCharsets.UTF_8))) {
-                String newEndEvent = endevent.replace(new String(StringValues.a[14], StandardCharsets.UTF_8), "");
+            String endevent = model.substring(model.indexOf(new String(Container.var1[12], StandardCharsets.UTF_8)));
+            endevent = endevent.substring(0, endevent.indexOf(new String(Container.var1[13], StandardCharsets.UTF_8)) + 2);
+            if (endevent.contains(new String(Container.var1[14], StandardCharsets.UTF_8))) {
+                String newEndEvent = endevent.replace(new String(Container.var1[14], StandardCharsets.UTF_8), "");
                 model = model.replace(endevent, newEndEvent);
             }
             diagram = importerService.importBPMNDiagram(model);
@@ -280,73 +280,73 @@ public class ProcessDiscovererController {
         try {
             Window slidersWindow;
             if(log == null) {
-                slidersWindow = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(StringValues.a[15], StandardCharsets.UTF_8), null, null);
+                slidersWindow = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(Container.var1[15], StandardCharsets.UTF_8), null, null);
                 slidersWindow.setTitle(new String(new byte[]{0x42,0x50,0x4d,0x4e,0x20,0x56,0x69,0x73,0x75,0x61,0x6c,0x69,0x7a,0x65,0x72,0x20,0x2d,0x20,0x72,0x61,0x66,0x66,0x61,0x65,0x6c,0x65,0x63,0x6f,0x6e,0x66,0x6f,0x72,0x74,0x69,0x2e,0x63,0x6f,0x6d}, StandardCharsets.UTF_8));
             }else {
-                slidersWindow = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(StringValues.a[16], StandardCharsets.UTF_8), null, null);
+                slidersWindow = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(Container.var1[16], StandardCharsets.UTF_8), null, null);
                 slidersWindow.setTitle(new String(new byte[]{0x50,0x72,0x6f,0x63,0x65,0x73,0x73,0x20,0x44,0x69,0x73,0x63,0x6f,0x76,0x65,0x72,0x65,0x72,0x20,0x2d,0x20,0x72,0x61,0x66,0x66,0x61,0x65,0x6c,0x65,0x63,0x6f,0x6e,0x66,0x6f,0x72,0x74,0x69,0x2e,0x63,0x6f,0x6d}, StandardCharsets.UTF_8));
 
-                this.use_fixed = (Radio) slidersWindow.getFellow(new String(StringValues.a[20], StandardCharsets.UTF_8));
-                this.use_dynamic = (Radio) slidersWindow.getFellow(new String(StringValues.a[21], StandardCharsets.UTF_8));
-                this.gateways = (Checkbox) slidersWindow.getFellow(new String(StringValues.a[23], StandardCharsets.UTF_8));
-                this.secondary = (Checkbox) slidersWindow.getFellow(new String(StringValues.a[25], StandardCharsets.UTF_8));
-                this.inverted_nodes = (Checkbox) slidersWindow.getFellow(new String(StringValues.a[26], StandardCharsets.UTF_8));
-                this.inverted_arcs = (Checkbox) slidersWindow.getFellow(new String(StringValues.a[27], StandardCharsets.UTF_8));
+                this.use_fixed = (Radio) slidersWindow.getFellow(new String(Container.var1[20], StandardCharsets.UTF_8));
+                this.use_dynamic = (Radio) slidersWindow.getFellow(new String(Container.var1[21], StandardCharsets.UTF_8));
+                this.gateways = (Checkbox) slidersWindow.getFellow(new String(Container.var1[23], StandardCharsets.UTF_8));
+                this.secondary = (Checkbox) slidersWindow.getFellow(new String(Container.var1[25], StandardCharsets.UTF_8));
+                this.inverted_nodes = (Checkbox) slidersWindow.getFellow(new String(Container.var1[26], StandardCharsets.UTF_8));
+                this.inverted_arcs = (Checkbox) slidersWindow.getFellow(new String(Container.var1[27], StandardCharsets.UTF_8));
 
-                this.activities = (Slider) slidersWindow.getFellow(new String(StringValues.a[28], StandardCharsets.UTF_8));
-                this.arcs = (Slider) slidersWindow.getFellow(new String(StringValues.a[29], StandardCharsets.UTF_8));
-                this.parallelism = (Slider) slidersWindow.getFellow(new String(StringValues.a[30], StandardCharsets.UTF_8));
-                this.activitiesText = (Intbox) slidersWindow.getFellow(new String(StringValues.a[31], StandardCharsets.UTF_8));
-                this.arcsText = (Intbox) slidersWindow.getFellow(new String(StringValues.a[32], StandardCharsets.UTF_8));
-                this.parallelismText = (Intbox) slidersWindow.getFellow(new String(StringValues.a[33], StandardCharsets.UTF_8));
+                this.activities = (Slider) slidersWindow.getFellow(new String(Container.var1[28], StandardCharsets.UTF_8));
+                this.arcs = (Slider) slidersWindow.getFellow(new String(Container.var1[29], StandardCharsets.UTF_8));
+                this.parallelism = (Slider) slidersWindow.getFellow(new String(Container.var1[30], StandardCharsets.UTF_8));
+                this.activitiesText = (Intbox) slidersWindow.getFellow(new String(Container.var1[31], StandardCharsets.UTF_8));
+                this.arcsText = (Intbox) slidersWindow.getFellow(new String(Container.var1[32], StandardCharsets.UTF_8));
+                this.parallelismText = (Intbox) slidersWindow.getFellow(new String(Container.var1[33], StandardCharsets.UTF_8));
 
-                this.caseNumber = (Label) slidersWindow.getFellow(new String(StringValues.a[34], StandardCharsets.UTF_8));
-                this.uniquecaseNumber = (Label) slidersWindow.getFellow(new String(StringValues.a[35], StandardCharsets.UTF_8));
-                this.activityNumber = (Label) slidersWindow.getFellow(new String(StringValues.a[36], StandardCharsets.UTF_8));
-                this.eventNumber = (Label) slidersWindow.getFellow(new String(StringValues.a[37], StandardCharsets.UTF_8));
-                this.meanDuration = (Label) slidersWindow.getFellow(new String(StringValues.a[38], StandardCharsets.UTF_8));
-                this.medianDuration = (Label) slidersWindow.getFellow(new String(StringValues.a[39], StandardCharsets.UTF_8));
-                this.maxDuration = (Label) slidersWindow.getFellow(new String(StringValues.a[40], StandardCharsets.UTF_8));
-                this.minDuration = (Label) slidersWindow.getFellow(new String(StringValues.a[41], StandardCharsets.UTF_8));
+                this.caseNumber = (Label) slidersWindow.getFellow(new String(Container.var1[34], StandardCharsets.UTF_8));
+                this.uniquecaseNumber = (Label) slidersWindow.getFellow(new String(Container.var1[35], StandardCharsets.UTF_8));
+                this.activityNumber = (Label) slidersWindow.getFellow(new String(Container.var1[36], StandardCharsets.UTF_8));
+                this.eventNumber = (Label) slidersWindow.getFellow(new String(Container.var1[37], StandardCharsets.UTF_8));
+                this.meanDuration = (Label) slidersWindow.getFellow(new String(Container.var1[38], StandardCharsets.UTF_8));
+                this.medianDuration = (Label) slidersWindow.getFellow(new String(Container.var1[39], StandardCharsets.UTF_8));
+                this.maxDuration = (Label) slidersWindow.getFellow(new String(Container.var1[40], StandardCharsets.UTF_8));
+                this.minDuration = (Label) slidersWindow.getFellow(new String(Container.var1[41], StandardCharsets.UTF_8));
 
-                this.selector = (Menupopup) slidersWindow.getFellow(new String(StringValues.a[42], StandardCharsets.UTF_8));
+                this.selector = (Menupopup) slidersWindow.getFellow(new String(Container.var1[42], StandardCharsets.UTF_8));
 
-                this.frequency = (Combobutton) slidersWindow.getFellow(new String(StringValues.a[43], StandardCharsets.UTF_8));
-                this.absolute_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[44], StandardCharsets.UTF_8));
-                this.case_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[45], StandardCharsets.UTF_8));
-                this.median_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[46], StandardCharsets.UTF_8));
-                this.mean_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[47], StandardCharsets.UTF_8));
-                this.mode_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[48], StandardCharsets.UTF_8));
-                this.max_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[49], StandardCharsets.UTF_8));
-                this.min_frequency = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[50], StandardCharsets.UTF_8));
+                this.frequency = (Combobutton) slidersWindow.getFellow(new String(Container.var1[43], StandardCharsets.UTF_8));
+                this.absolute_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[44], StandardCharsets.UTF_8));
+                this.case_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[45], StandardCharsets.UTF_8));
+                this.median_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[46], StandardCharsets.UTF_8));
+                this.mean_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[47], StandardCharsets.UTF_8));
+                this.mode_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[48], StandardCharsets.UTF_8));
+                this.max_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[49], StandardCharsets.UTF_8));
+                this.min_frequency = (Menuitem) slidersWindow.getFellow(new String(Container.var1[50], StandardCharsets.UTF_8));
 
-                this.duration = (Combobutton) slidersWindow.getFellow(new String(StringValues.a[51], StandardCharsets.UTF_8));
-                this.total_duration = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[52], StandardCharsets.UTF_8));
-                this.median_duration = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[53], StandardCharsets.UTF_8));
-                this.mean_duration = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[54], StandardCharsets.UTF_8));
-                this.max_duration = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[55], StandardCharsets.UTF_8));
-                this.min_duration = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[56], StandardCharsets.UTF_8));
+                this.duration = (Combobutton) slidersWindow.getFellow(new String(Container.var1[51], StandardCharsets.UTF_8));
+                this.total_duration = (Menuitem) slidersWindow.getFellow(new String(Container.var1[52], StandardCharsets.UTF_8));
+                this.median_duration = (Menuitem) slidersWindow.getFellow(new String(Container.var1[53], StandardCharsets.UTF_8));
+                this.mean_duration = (Menuitem) slidersWindow.getFellow(new String(Container.var1[54], StandardCharsets.UTF_8));
+                this.max_duration = (Menuitem) slidersWindow.getFellow(new String(Container.var1[55], StandardCharsets.UTF_8));
+                this.min_duration = (Menuitem) slidersWindow.getFellow(new String(Container.var1[56], StandardCharsets.UTF_8));
 
-                this.details = (Button) slidersWindow.getFellow(new String(StringValues.a[63], StandardCharsets.UTF_8));
-                this.cases = (Button) slidersWindow.getFellow(new String(StringValues.a[64], StandardCharsets.UTF_8));
-                this.fitness = (Button) slidersWindow.getFellow(new String(StringValues.a[65], StandardCharsets.UTF_8));
-                this.filter = (Button) slidersWindow.getFellow(new String(StringValues.a[66], StandardCharsets.UTF_8));
-                this.animate = (Button) slidersWindow.getFellow(new String(StringValues.a[67], StandardCharsets.UTF_8));
+                this.details = (Button) slidersWindow.getFellow(new String(Container.var1[63], StandardCharsets.UTF_8));
+                this.cases = (Button) slidersWindow.getFellow(new String(Container.var1[64], StandardCharsets.UTF_8));
+                this.fitness = (Button) slidersWindow.getFellow(new String(Container.var1[65], StandardCharsets.UTF_8));
+                this.filter = (Button) slidersWindow.getFellow(new String(Container.var1[66], StandardCharsets.UTF_8));
+                this.animate = (Button) slidersWindow.getFellow(new String(Container.var1[67], StandardCharsets.UTF_8));
 
-                this.exportUnfitted = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[69], StandardCharsets.UTF_8));
+                this.exportUnfitted = (Menuitem) slidersWindow.getFellow(new String(Container.var1[69], StandardCharsets.UTF_8));
             }
 
-            Combobutton export = (Combobutton) slidersWindow.getFellow(new String(StringValues.a[70], StandardCharsets.UTF_8));
-            Menuitem downloadPDF = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[71], StandardCharsets.UTF_8));
-            Menuitem downloadPNG = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[72], StandardCharsets.UTF_8));
-            Menuitem exportBPMN = (Menuitem) slidersWindow.getFellow(new String(StringValues.a[73], StandardCharsets.UTF_8));
+            Combobutton export = (Combobutton) slidersWindow.getFellow(new String(Container.var1[70], StandardCharsets.UTF_8));
+            Menuitem downloadPDF = (Menuitem) slidersWindow.getFellow(new String(Container.var1[71], StandardCharsets.UTF_8));
+            Menuitem downloadPNG = (Menuitem) slidersWindow.getFellow(new String(Container.var1[72], StandardCharsets.UTF_8));
+            Menuitem exportBPMN = (Menuitem) slidersWindow.getFellow(new String(Container.var1[73], StandardCharsets.UTF_8));
 
             if(log != null) {
                 populateMetrics(log);
 
                 for (String option : generateLabels(log)) {
                     Menuitem item = new Menuitem(option);
-                    item.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                    item.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                         public void onEvent(Event event) throws Exception {
                             setLabel(item.getLabel());
                             visualized = false;
@@ -365,26 +365,26 @@ public class ProcessDiscovererController {
                         setArcAndActivityRatios();
                     }
                 };
-                this.use_fixed.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
-                this.use_dynamic.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
-                this.gateways.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
-                this.secondary.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
-                this.inverted_nodes.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
-                this.inverted_arcs.addEventListener(new String(StringValues.a[75], StandardCharsets.UTF_8), radioListener);
+                this.use_fixed.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
+                this.use_dynamic.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
+                this.gateways.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
+                this.secondary.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
+                this.inverted_nodes.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
+                this.inverted_arcs.addEventListener(new String(Container.var1[75], StandardCharsets.UTF_8), radioListener);
 
-                this.activities.addEventListener(new String(StringValues.a[76], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.activities.addEventListener(new String(Container.var1[76], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         activitiesText.setValue(activities.getCurpos());
                         setArcAndActivityRatios();
                     }
                 });
-                this.arcs.addEventListener(new String(StringValues.a[76], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.arcs.addEventListener(new String(Container.var1[76], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         arcsText.setValue(arcs.getCurpos());
                         setArcAndActivityRatios();
                     }
                 });
-                this.parallelism.addEventListener(new String(StringValues.a[76], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.parallelism.addEventListener(new String(Container.var1[76], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         parallelismText.setValue(parallelism.getCurpos());
                         setArcAndActivityRatios();
@@ -414,8 +414,8 @@ public class ProcessDiscovererController {
                         }
                     }
                 };
-                this.activitiesText.addEventListener(new String(StringValues.a[77], StandardCharsets.UTF_8), actChangeListener);
-                this.activitiesText.addEventListener(new String(StringValues.a[78], StandardCharsets.UTF_8), actChangingListener);
+                this.activitiesText.addEventListener(new String(Container.var1[77], StandardCharsets.UTF_8), actChangeListener);
+                this.activitiesText.addEventListener(new String(Container.var1[78], StandardCharsets.UTF_8), actChangingListener);
 
                 EventListener<Event> arcChangeListener = new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
@@ -440,8 +440,8 @@ public class ProcessDiscovererController {
                         }
                     }
                 };
-                this.arcsText.addEventListener(new String(StringValues.a[77], StandardCharsets.UTF_8), arcChangeListener);
-                this.arcsText.addEventListener(new String(StringValues.a[78], StandardCharsets.UTF_8), arcChangingListener);
+                this.arcsText.addEventListener(new String(Container.var1[77], StandardCharsets.UTF_8), arcChangeListener);
+                this.arcsText.addEventListener(new String(Container.var1[78], StandardCharsets.UTF_8), arcChangingListener);
 
                 EventListener<Event> parallelismChangeListener = new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
@@ -466,36 +466,36 @@ public class ProcessDiscovererController {
                         }
                     }
                 };
-                this.parallelismText.addEventListener(new String(StringValues.a[77], StandardCharsets.UTF_8), parallelismChangeListener);
-                this.parallelismText.addEventListener(new String(StringValues.a[78], StandardCharsets.UTF_8), parallelismChangingListener);
+                this.parallelismText.addEventListener(new String(Container.var1[77], StandardCharsets.UTF_8), parallelismChangeListener);
+                this.parallelismText.addEventListener(new String(Container.var1[78], StandardCharsets.UTF_8), parallelismChangingListener);
 
                 EventListener<Event> frequencyListener = new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         visualizeFrequency();
                     }
                 };
-                this.frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.absolute_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.case_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.median_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.mean_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.mode_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.max_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
-                this.min_frequency.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), frequencyListener);
+                this.frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.absolute_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.case_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.median_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.mean_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.mode_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.max_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
+                this.min_frequency.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), frequencyListener);
 
                 EventListener<Event> durationListener = new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         visualizeDuration();
                     }
                 };
-                this.duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
-                this.total_duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
-                this.median_duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
-                this.mean_duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
-                this.max_duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
-                this.min_duration.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), durationListener);
+                this.duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
+                this.total_duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
+                this.median_duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
+                this.mean_duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
+                this.max_duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
+                this.min_duration.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), durationListener);
 
-                this.exportUnfitted.addEventListener(new String(StringValues.a[79], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.exportUnfitted.addEventListener(new String(Container.var1[79], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -506,18 +506,18 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.details.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.details.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
-                        Window details_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(StringValues.a[17], StandardCharsets.UTF_8), null, null);
+                        Window details_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(Container.var1[17], StandardCharsets.UTF_8), null, null);
                         details_window.setTitle(new String(new byte[]{0x44,0x65,0x74,0x61,0x69,0x6c,0x73,0x20,0x2d,0x20,0x72,0x61,0x66,0x66,0x61,0x65,0x6c,0x65,0x63,0x6f,0x6e,0x66,0x6f,0x72,0x74,0x69,0x2e,0x63,0x6f,0x6d}, StandardCharsets.UTF_8));
-                        Listbox listbox = (Listbox) details_window.getFellow(new String(StringValues.a[81], StandardCharsets.UTF_8));
-                        Listheader pos = (Listheader) details_window.getFellow(new String(StringValues.a[82], StandardCharsets.UTF_8));
+                        Listbox listbox = (Listbox) details_window.getFellow(new String(Container.var1[81], StandardCharsets.UTF_8));
+                        Listheader pos = (Listheader) details_window.getFellow(new String(Container.var1[82], StandardCharsets.UTF_8));
                         pos.setSortAscending(new NumberComparator(true, 0));
                         pos.setSortDescending(new NumberComparator(false, 0));
-                        Listheader detail_frequency = (Listheader) details_window.getFellow(new String(StringValues.a[83], StandardCharsets.UTF_8));
+                        Listheader detail_frequency = (Listheader) details_window.getFellow(new String(Container.var1[83], StandardCharsets.UTF_8));
                         detail_frequency.setSortAscending(new NumberComparator(true, 2));
                         detail_frequency.setSortDescending(new NumberComparator(false, 2));
-                        Listheader detail_ratio = (Listheader) details_window.getFellow(new String(StringValues.a[84], StandardCharsets.UTF_8));
+                        Listheader detail_ratio = (Listheader) details_window.getFellow(new String(Container.var1[84], StandardCharsets.UTF_8));
                         detail_ratio.setSortAscending(new NumberComparator(true, 2));
                         detail_ratio.setSortDescending(new NumberComparator(false, 2));
 
@@ -539,7 +539,7 @@ public class ProcessDiscovererController {
                         listbox.setRows(5);
 
                         Button save = (Button) details_window.getFellow("save");
-                        save.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                        save.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                             @Override
                             public void onEvent(Event event) throws Exception {
                                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -562,18 +562,18 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.cases.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.cases.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
-                        Window cases_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(StringValues.a[18], StandardCharsets.UTF_8), null, null);
+                        Window cases_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(Container.var1[18], StandardCharsets.UTF_8), null, null);
                         cases_window.setTitle(new String(new byte[]{0x50,0x72,0x6f,0x63,0x65,0x73,0x73,0x20,0x49,0x6e,0x73,0x74,0x61,0x6e,0x63,0x65,0x73,0x20,0x2d,0x20,0x72,0x61,0x66,0x66,0x61,0x65,0x6c,0x65,0x63,0x6f,0x6e,0x66,0x6f,0x72,0x74,0x69,0x2e,0x63,0x6f,0x6d}, StandardCharsets.UTF_8));
-                        Listbox listbox = (Listbox) cases_window.getFellow(new String(StringValues.a[85], StandardCharsets.UTF_8));
-                        Listheader pos = (Listheader) cases_window.getFellow(new String(StringValues.a[82], StandardCharsets.UTF_8));
+                        Listbox listbox = (Listbox) cases_window.getFellow(new String(Container.var1[85], StandardCharsets.UTF_8));
+                        Listheader pos = (Listheader) cases_window.getFellow(new String(Container.var1[82], StandardCharsets.UTF_8));
                         pos.setSortAscending(new NumberComparator(true, 0));
                         pos.setSortDescending(new NumberComparator(false, 0));
-                        Listheader variant_value = (Listheader) cases_window.getFellow(new String(StringValues.a[86], StandardCharsets.UTF_8));
+                        Listheader variant_value = (Listheader) cases_window.getFellow(new String(Container.var1[86], StandardCharsets.UTF_8));
                         variant_value.setSortAscending(new NumberComparator(true, 2));
                         variant_value.setSortDescending(new NumberComparator(false, 2));
-                        Listheader case_length = (Listheader) cases_window.getFellow(new String(StringValues.a[87], StandardCharsets.UTF_8));
+                        Listheader case_length = (Listheader) cases_window.getFellow(new String(Container.var1[87], StandardCharsets.UTF_8));
                         case_length.setSortAscending(new NumberComparator(true, 2));
                         case_length.setSortDescending(new NumberComparator(false, 2));
 
@@ -615,7 +615,7 @@ public class ProcessDiscovererController {
                         });
 
                         Button save = (Button) cases_window.getFellow("save");
-                        save.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                        save.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                             @Override
                             public void onEvent(Event event) throws Exception {
                                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -638,18 +638,18 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.fitness.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.fitness.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
-                        Window details_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(StringValues.a[19], StandardCharsets.UTF_8), null, null);
+                        Window details_window = (Window) portalContext.getUI().createComponent(getClass().getClassLoader(), new String(Container.var1[19], StandardCharsets.UTF_8), null, null);
                         details_window.setTitle(new String(new byte[]{0x46,0x69,0x74,0x6e,0x65,0x73,0x73,0x20,0x2d,0x20,0x72,0x61,0x66,0x66,0x61,0x65,0x6c,0x65,0x63,0x6f,0x6e,0x66,0x6f,0x72,0x74,0x69,0x2e,0x63,0x6f,0x6d}, StandardCharsets.UTF_8));
-                        Listbox listbox = (Listbox) details_window.getFellow(new String(StringValues.a[81], StandardCharsets.UTF_8));
-                        Listheader detail_frequency = (Listheader) details_window.getFellow(new String(StringValues.a[83], StandardCharsets.UTF_8));
+                        Listbox listbox = (Listbox) details_window.getFellow(new String(Container.var1[81], StandardCharsets.UTF_8));
+                        Listheader detail_frequency = (Listheader) details_window.getFellow(new String(Container.var1[83], StandardCharsets.UTF_8));
                         detail_frequency.setSortAscending(new NumberComparator(true, 1));
                         detail_frequency.setSortDescending(new NumberComparator(false, 1));
-                        Listheader detail_ratio = (Listheader) details_window.getFellow(new String(StringValues.a[84], StandardCharsets.UTF_8));
+                        Listheader detail_ratio = (Listheader) details_window.getFellow(new String(Container.var1[84], StandardCharsets.UTF_8));
                         detail_ratio.setSortAscending(new NumberComparator(true, 1));
                         detail_ratio.setSortDescending(new NumberComparator(false, 1));
-                        Listcell listcell1 = new Listcell(new String(StringValues.a[88], StandardCharsets.UTF_8));
+                        Listcell listcell1 = new Listcell(new String(Container.var1[88], StandardCharsets.UTF_8));
                         double fitness = measureFitness();
                         Listcell listcell2 = new Listcell(decimalFormat.format(fitness));
                         Listcell listcell3 = new Listcell(decimalFormat.format(fitness * 100) + "%");
@@ -684,12 +684,12 @@ public class ProcessDiscovererController {
                     }
                 };
 
-                this.filter.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.filter.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                     public void onEvent(Event event) throws Exception {
                         new FilterCriterionSelector(getLabel(), ProcessDiscovererController.this, criteria, options_frequency, min, max);
                     }
                 });
-                this.animate.addEventListener(new String(StringValues.a[80], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[80], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         String layout = event.getData().toString();
@@ -727,7 +727,7 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[89], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[89], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -756,7 +756,7 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[90], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[90], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -785,7 +785,7 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[91], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[91], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -814,7 +814,7 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[92], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[92], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -843,7 +843,7 @@ public class ProcessDiscovererController {
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[93], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[93], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -853,7 +853,7 @@ public class ProcessDiscovererController {
                         Set<String> manually_removed_arcs = new HashSet<>();
                         String edge = event.getData().toString();
 
-                        for (String name : options_frequency.get(new String(StringValues.a[94], StandardCharsets.UTF_8)).keySet()) {
+                        for (String name : options_frequency.get(new String(Container.var1[94], StandardCharsets.UTF_8)).keySet()) {
                             if (name.equals(edge) || name.replaceAll("'", "").equals(edge)) {
                                 manually_removed_arcs.add(name);
                                 break;
@@ -866,14 +866,14 @@ public class ProcessDiscovererController {
                                     CONTAIN_ANY,
                                     TRACE,
                                     getLabel(),
-                                    new String(StringValues.a[94], StandardCharsets.UTF_8),
+                                    new String(Container.var1[94], StandardCharsets.UTF_8),
                                     manually_removed_arcs
                             ));
                         }
                     }
                 });
 
-                this.animate.addEventListener(new String(StringValues.a[95], StandardCharsets.UTF_8), new EventListener<Event>() {
+                this.animate.addEventListener(new String(Container.var1[95], StandardCharsets.UTF_8), new EventListener<Event>() {
                     @Override
                     public void onEvent(Event event) throws Exception {
                         activities_value = activities.getCurpos();
@@ -883,7 +883,7 @@ public class ProcessDiscovererController {
                         Set<String> manually_removed_arcs = new HashSet<>();
                         String edge = event.getData().toString();
 
-                        for (String name : options_frequency.get(new String(StringValues.a[94], StandardCharsets.UTF_8)).keySet()) {
+                        for (String name : options_frequency.get(new String(Container.var1[94], StandardCharsets.UTF_8)).keySet()) {
                             if (name.equals(edge) || name.replaceAll("'", "").equals(edge)) {
                                 manually_removed_arcs.add(name);
                                 break;
@@ -896,18 +896,18 @@ public class ProcessDiscovererController {
                                     CONTAIN_ANY,
                                     TRACE,
                                     getLabel(),
-                                    new String(StringValues.a[94], StandardCharsets.UTF_8),
+                                    new String(Container.var1[94], StandardCharsets.UTF_8),
                                     manually_removed_arcs
                             ));
                         }
                     }
                 });
 
-                slidersWindow.addEventListener(new String(StringValues.a[96], StandardCharsets.UTF_8), windowListener);
-                slidersWindow.addEventListener(new String(StringValues.a[97], StandardCharsets.UTF_8), windowListener);
+                slidersWindow.addEventListener(new String(Container.var1[96], StandardCharsets.UTF_8), windowListener);
+                slidersWindow.addEventListener(new String(Container.var1[97], StandardCharsets.UTF_8), windowListener);
             }
 
-            exportBPMN.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+            exportBPMN.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                 public void onEvent(Event event) throws Exception {
                     activities_value = activities.getCurpos();
                     arcs_value = arcs.getCurpos();
@@ -1034,15 +1034,15 @@ public class ProcessDiscovererController {
                             pos += 17;
                         }
                     }
-                    name += new String(StringValues.a[pos], StandardCharsets.UTF_8);
-                    String command = String.format(new String(StringValues.a[115], StandardCharsets.UTF_8), name);
+                    name += new String(Container.var1[pos], StandardCharsets.UTF_8);
+                    String command = String.format(new String(Container.var1[115], StandardCharsets.UTF_8), name);
                     Clients.evalJavaScript(command);
                 }
             };
 
-            export.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), exportPDF);
-            downloadPDF.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), exportPDF);
-            downloadPNG.addEventListener(new String(StringValues.a[74], StandardCharsets.UTF_8), new EventListener<Event>() {
+            export.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), exportPDF);
+            downloadPDF.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), exportPDF);
+            downloadPNG.addEventListener(new String(Container.var1[74], StandardCharsets.UTF_8), new EventListener<Event>() {
                 public void onEvent(Event event) throws Exception {
                     String name = log_name;
                     int pos = 97;
@@ -1087,8 +1087,8 @@ public class ProcessDiscovererController {
                             pos += 17;
                         }
                     }
-                    name += new String(StringValues.a[pos], StandardCharsets.UTF_8);
-                    String command = String.format(new String(StringValues.a[116], StandardCharsets.UTF_8), name);
+                    name += new String(Container.var1[pos], StandardCharsets.UTF_8);
+                    String command = String.format(new String(Container.var1[116], StandardCharsets.UTF_8), name);
                     Clients.evalJavaScript(command);
                 }
             });
@@ -1125,7 +1125,7 @@ public class ProcessDiscovererController {
             StringBuilder traceBuilder = new StringBuilder();
             for (XEvent event : trace) {
                 String label = event.getAttributes().get(getLabel()).toString();
-                if(event.getAttributes().get(new String(StringValues.a[117], StandardCharsets.UTF_8)).toString().endsWith("complete")) length++;
+                if(event.getAttributes().get(new String(Container.var1[117], StandardCharsets.UTF_8)).toString().endsWith("complete")) length++;
                 traceBuilder.append(label + ",");
             }
             String s = traceBuilder.toString();
@@ -1232,10 +1232,10 @@ public class ProcessDiscovererController {
         uniquecaseNumber.setValue(Integer.toString(uniqueTraces.size()));
         activityNumber.setValue(Integer.toString(labels.size()));
         eventNumber.setValue(Integer.toString(events));
-        meanDuration.setValue(TimeConverter.convertMilliseconds(Double.toString(mean)));
-        medianDuration.setValue(TimeConverter.convertMilliseconds(Double.toString(median)));
-        maxDuration.setValue(TimeConverter.convertMilliseconds(Double.toString(longhest)));
-        minDuration.setValue(TimeConverter.convertMilliseconds(Double.toString(shortest)));
+        meanDuration.setValue(Convertor.convertFrom(Double.toString(mean)));
+        medianDuration.setValue(Convertor.convertFrom(Double.toString(median)));
+        maxDuration.setValue(Convertor.convertFrom(Double.toString(longhest)));
+        minDuration.setValue(Convertor.convertFrom(Double.toString(shortest)));
     }
 
     private void generateOptions(XLog log) {

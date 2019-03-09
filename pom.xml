@@ -131,13 +131,13 @@
         <dependency>
             <groupId>com.raffaeleconforti</groupId>
             <artifactId>bpmn-util</artifactId>
-            <version>1.0.20180719</version>
+            <version>1.0.20180831</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.raffaeleconforti</groupId>
             <artifactId>foreignkey-discovery</artifactId>
-            <version>1.0.20180719</version>
+            <version>1.0.20180831</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -174,26 +174,19 @@
         <dependency>
             <groupId>com.raffaeleconforti</groupId>
             <artifactId>bpmn-util</artifactId>
-            <version>1.0.20180719</version>
+            <version>1.0.20180831</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.raffaeleconforti</groupId>
             <artifactId>foreignkey-discovery</artifactId>
-            <version>1.0.20180719</version>
+            <version>1.0.20180831</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.raffaeleconforti</groupId>
             <artifactId>statistics</artifactId>
-            <version>1.0.20180719</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.raffaeleconforti</groupId>
-            <artifactId>process-discoverer-logic</artifactId>
-            <version>1.0.20180719</version>
+            <version>1.0.20180831</version>
             <scope>compile</scope>
         </dependency>
 

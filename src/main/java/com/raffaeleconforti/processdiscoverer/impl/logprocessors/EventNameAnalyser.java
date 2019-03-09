@@ -50,7 +50,7 @@
 
 package com.raffaeleconforti.processdiscoverer.impl.logprocessors;
 
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
 
 import java.nio.charset.StandardCharsets;
 
@@ -60,19 +60,19 @@ import java.nio.charset.StandardCharsets;
 public class EventNameAnalyser {
 
     public boolean isCompleteEvent(String name) {
-        return name.toLowerCase().endsWith(new String(StringValues.a[120], StandardCharsets.UTF_8));
+        return name.toLowerCase().endsWith(new String(Container.var1[120], StandardCharsets.UTF_8));
     }
 
     public boolean isStartEvent(String name) {
-        return name.toLowerCase().endsWith(new String(StringValues.a[121], StandardCharsets.UTF_8));
+        return name.toLowerCase().endsWith(new String(Container.var1[121], StandardCharsets.UTF_8));
     }
 
     public String getStartEvent(String name) {
-        return name.substring(0, name.length() - 8) + new String(StringValues.a[119], StandardCharsets.UTF_8);
+        return name.substring(0, name.length() - 8) + new String(Container.var1[119], StandardCharsets.UTF_8);
     }
 
     public String getCompleteEvent(String name) {
-        return name.substring(0, name.length() - 5) + new String(StringValues.a[118], StandardCharsets.UTF_8);
+        return name.substring(0, name.length() - 5) + new String(Container.var1[118], StandardCharsets.UTF_8);
     }
 
     public String getCollapsedEvent(String name) {

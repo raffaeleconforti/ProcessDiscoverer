@@ -55,7 +55,7 @@ import com.raffaeleconforti.processdiscoverer.impl.VisualizationType;
 import com.raffaeleconforti.processdiscoverer.impl.Arc;
 import com.raffaeleconforti.processdiscoverer.impl.collectors.ArcInfoCollector;
 import com.raffaeleconforti.processdiscoverer.impl.logprocessors.EventNameAnalyser;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
 import org.eclipse.collections.impl.set.mutable.UnifiedSet;
 import org.eclipse.collections.impl.set.mutable.primitive.IntHashSet;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
@@ -78,7 +78,7 @@ import java.util.Set;
  */
 public class BPMNDiagramBuilder {
 
-    private final static DecimalFormat decimalFormat = new DecimalFormat(new String(StringValues.a[123], StandardCharsets.UTF_8));
+    private final static DecimalFormat decimalFormat = new DecimalFormat(new String(Container.var1[123], StandardCharsets.UTF_8));
     private final static String start_name = "|>";
     private final static String end_name = "[]";
     private final ArcInfoCollector arcInfoCollector;

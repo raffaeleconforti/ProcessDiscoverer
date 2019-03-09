@@ -51,8 +51,8 @@
 package com.raffaeleconforti.processdiscoverer;
 
 import com.raffaeleconforti.processdiscoverer.impl.filter.LogFilterTypeSelector;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
-import com.raffaeleconforti.processdiscoverer.impl.util.TimeConverter;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
+import com.raffaeleconforti.processdiscoverer.impl.util.Convertor;
 import com.raffaeleconforti.processdiscoverer.impl.filter.LogFilterCriterionFactory;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -76,7 +76,7 @@ import static com.raffaeleconforti.processdiscoverer.impl.filter.Level.TRACE;
  */
 class CreateFilterCriterion {
 
-    private final DecimalFormat decimalFormat = new DecimalFormat(new String(StringValues.a[123], StandardCharsets.UTF_8));
+    private final DecimalFormat decimalFormat = new DecimalFormat(new String(Container.var1[123], StandardCharsets.UTF_8));
     private final String label;
 
     private Window createFilterCriterionW;
@@ -247,7 +247,7 @@ class CreateFilterCriterion {
                 for (String v : criterion.getValue()) {
                     if (v.startsWith(">")) d = Double.parseDouble(v.substring(1));
                 }
-                String[] p = TimeConverter.parseDuration(d);
+                String[] p = Convertor.convertFrom(d);
                 decimalbox.setValue(p[0]);
                 decimalbox.setDisabled(false);
                 timespan.setSelectedIndex(Integer.parseInt(p[1]));

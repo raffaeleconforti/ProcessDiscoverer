@@ -54,7 +54,7 @@ import com.raffaeleconforti.processdiscoverer.impl.VisualizationAggregation;
 import com.raffaeleconforti.processdiscoverer.impl.VisualizationType;
 import com.raffaeleconforti.processdiscoverer.impl.Arc;
 import com.raffaeleconforti.processdiscoverer.impl.util.FrequencySetPopulator;
-import com.raffaeleconforti.processdiscoverer.impl.util.StringValues;
+import com.raffaeleconforti.processdiscoverer.impl.util.Container;
 import org.eclipse.collections.impl.bimap.mutable.HashBiMap;
 import org.eclipse.collections.impl.list.mutable.primitive.LongArrayList;
 import org.eclipse.collections.impl.map.mutable.primitive.IntDoubleHashMap;
@@ -67,8 +67,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class NodeInfoCollector {
 
-    private final String plus_complete_code = new String(StringValues.a[120], StandardCharsets.UTF_8);
-    private final String plus_start_code = new String(StringValues.a[121], StandardCharsets.UTF_8);
+    private final String plus_complete_code = new String(Container.var1[120], StandardCharsets.UTF_8);
+    private final String plus_start_code = new String(Container.var1[121], StandardCharsets.UTF_8);
 
     private final int number_of_traces;
 
